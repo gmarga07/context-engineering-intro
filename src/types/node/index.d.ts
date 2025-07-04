@@ -19,9 +19,19 @@ declare module "path" {
   export function extname(p: string): string;
 }
 
+declare module "fs" {
+  export type PathLike = string;
+  export function readFileSync(path: PathLike, options?: any): string | Buffer;
+  export function existsSync(path: PathLike): boolean;
+}
+
 declare module "child_process" {
-  import { ExecOptions } from "child_process";
-  export function exec(command: string, options: ExecOptions | undefined | null, callback: (error: any, stdout: string, stderr: string) => void): any;
+  export interface ExecAsyncResult { stdout: string; stderr: string; }
+  export function exec(
+    command: string,
+    options: any,
+    callback: (error: any, stdout: string, stderr: string) => void
+  ): any;
 }
 
 declare module "util" {
