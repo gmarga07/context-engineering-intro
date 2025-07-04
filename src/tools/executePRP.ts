@@ -1,9 +1,9 @@
 import { ToolDefinition } from "@modelcontextprotocol/sdk";
-import * as fs from "node:fs/promises";
-import * as path from "node:path";
+import { readFile } from "fs/promises";
+import { resolve } from "path";
 
-import { promisify } from "node:util";
-import { exec } from "node:child_process";
+import { promisify } from "util";
+import { exec } from "child_process";
 
 export const executePRPTool: ToolDefinition = {
   name: "executePRP",
@@ -32,12 +32,12 @@ export const executePRPTool: ToolDefinition = {
 
     const send = context?.sendProgress;
 
-    const absPath = path.resolve(prpPath);
+    const absPath = resolve(prpPath);
     send?.(`Reading PRP from ${absPath} …`);
 
     let prpContent = "";
     try {
-      prpContent = await fs.readFile(absPath, "utf8");
+      prpContent = await readFile(absPath, "utf8");
     } catch (err: any) {
       send?.(`❌ Failed to read PRP: ${err.message}`);
       throw err;

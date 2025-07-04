@@ -1,17 +1,11 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "Node16",
-    "lib": ["ES2022"],
-    "outDir": "dist",
-    "rootDir": ".",
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "types": ["node", "jest"],
     "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node16",
-    "typeRoots": ["./node_modules/@types", "./src/types"],
-    "types": ["node", "jest"]
+    "outDir": "dist"
   },
   "include": ["src/**/*", "tests/**/*"]
 }
