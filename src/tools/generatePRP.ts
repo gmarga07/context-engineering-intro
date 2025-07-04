@@ -1,8 +1,8 @@
 import { ToolDefinition } from "@modelcontextprotocol/sdk";
-import * as fs from "node:fs/promises";
-import * as path from "node:path";
-import { exec } from "node:child_process";
-import { promisify } from "node:util";
+import { readFile, writeFile, mkdir } from "fs/promises";
+import { resolve, join, basename, extname, dirname } from "path";
+import { exec } from "child_process";
+import { promisify } from "util";
 
 export const generatePRPTool: ToolDefinition = {
   name: "generatePRP",
@@ -31,28 +31,28 @@ export const generatePRPTool: ToolDefinition = {
     try {
       send?.("Reading feature file…");
 
-      const featurePath = path.resolve(featureFile);
-      const defaultOut = path.join(
+      const featurePath = resolve(featureFile);
+      const defaultOut = join(
         "PRPs",
-        path.basename(featureFile, path.extname(featureFile)) + ".md"
+        basename(featureFile, extname(featureFile)) + ".md"
       );
-      const outPath = path.resolve(outputPath || defaultOut);
+      const outPath = resolve(outputPath || defaultOut);
 
       // Ensure destination directory exists
-      await fs.mkdir(path.dirname(outPath), { recursive: true });
+      await mkdir(dirname(outPath), { recursive: true });
 
       // Load feature markdown
-      const featureMarkdown = await fs.readFile(featurePath, "utf8");
+      const featureMarkdown = await readFile(featurePath, "utf8");
 
       send?.("Loading PRP base template…");
 
       // Try to load the base PRP template if it exists.
-      const baseTemplatePath = path.resolve(
+      const baseTemplatePath = resolve(
         "PRPs/templates/prp_base.md"
       );
       let template = "";
       try {
-        template = await fs.readFile(baseTemplatePath, "utf8");
+        template = await readFile(baseTemplatePath, "utf8");
       } catch {
         send?.("Base template not found. Proceeding with blank template.");
       }
@@ -83,8 +83,8 @@ export const generatePRPTool: ToolDefinition = {
       );
 
       // Compose PRP header
-      const prpHeader = `name: "${path.basename(featureFile, path.extname(featureFile))
-        .replace(/_/g, " ")} PRP"\ndescription: |\n  Generated automatically from feature request **${path.basename(
+      const prpHeader = `name: "${basename(featureFile, extname(featureFile))
+        .replace(/_/g, " ")} PRP"\ndescription: |\n  Generated automatically from feature request **${basename(
         featureFile
       )}**.\n  Review and complete all TODO sections marked below before executing.\n\n`;
 
@@ -96,7 +96,7 @@ export const generatePRPTool: ToolDefinition = {
       ].join("");
 
       send?.("Writing PRP output…");
-      await fs.writeFile(outPath, prpContents, "utf8");
+      await writeFile(outPath, prpContents, "utf8");
 
       // Parse validation gates (bash code blocks inside Validation Loop)
       const bashBlocks = prpContents.match(/```bash[\s\S]*?```/g) || [];
