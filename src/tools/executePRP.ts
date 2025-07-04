@@ -1,8 +1,8 @@
 import { ToolDefinition } from "@modelcontextprotocol/sdk";
-import { readFile } from "fs/promises";
-import { resolve } from "path";
-import { promisify } from "util";
-import { exec } from "child_process";
+import { readFile } from "node:fs/promises";
+import { resolve } from "node:path";
+import { promisify } from "node:util";
+import { exec } from "node:child_process";
 
 export const executePRPTool: ToolDefinition = {
   name: "executePRP",
