@@ -1,3 +1,4 @@
+import { describe, it, expect } from "@jest/globals";
 import { listPRPsTool } from "../src/tools/listPRPs";
 
 describe("listPRPs tool", () => {
