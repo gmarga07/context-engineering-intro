@@ -1,12 +1,12 @@
 import { ToolDefinition } from "@modelcontextprotocol/sdk";
-import * as fs from "node:fs/promises";
-import * as path from "node:path";
+import { readdir } from "fs/promises";
+import { join, resolve } from "path";
 
 async function getPRPFiles(dir: string): Promise<string[]> {
-  const entries = await fs.readdir(dir, { withFileTypes: true });
+  const entries = await readdir(dir, { withFileTypes: true });
   const files: string[] = [];
   for (const entry of entries) {
-    const fullPath = path.join(dir, entry.name);
+    const fullPath = join(dir, entry.name);
     if (entry.isDirectory()) {
       const sub = await getPRPFiles(fullPath);
       files.push(...sub);
@@ -26,7 +26,7 @@ export const listPRPsTool: ToolDefinition = {
     additionalProperties: false
   },
   handler: async () => {
-    const prpRoot = path.resolve("PRPs");
+    const prpRoot = resolve("PRPs");
     try {
       const files = await getPRPFiles(prpRoot);
       return { files };
