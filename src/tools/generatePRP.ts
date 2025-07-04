@@ -1,8 +1,8 @@
 import { ToolDefinition } from "@modelcontextprotocol/sdk";
-import fs from "fs/promises";
-import path from "path";
-import { exec } from "child_process";
-import { promisify } from "util";
+import fs from "node:fs/promises";
+import path from "node:path";
+import { exec } from "node:child_process";
+import { promisify } from "node:util";
 
 export const generatePRPTool: ToolDefinition = {
   name: "generatePRP",
