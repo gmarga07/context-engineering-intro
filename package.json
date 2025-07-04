@@ -10,7 +10,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "ts-node-dev --respawn src/server.ts",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "test": "jest --passWithNoTests"
   },
   "keywords": [
     "mcp",
@@ -26,6 +27,18 @@
     "typescript": "^5.4.0",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
-    "@types/node": "^20.11.17"
+    "@types/node": "^20.11.17",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.0",
+    "@types/jest": "^29.5.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/context-engineering-mcp"
+  },
+  "author": "Your Name <you@example.com>",
+  "files": ["dist", "schemas", "README.md"],
+  "publishConfig": {
+    "access": "public"
   }
 }

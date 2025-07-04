@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "generatePRP parameters",
+  "type": "object",
+  "properties": {
+    "featureFile": {
+      "type": "string",
+      "description": "Path to the feature markdown file (e.g. INITIAL.md)"
+    },
+    "outputPath": {
+      "type": "string",
+      "description": "Optional output path for the generated PRP markdown file"
+    }
+  },
+  "required": ["featureFile"],
+  "additionalProperties": false
+}
