@@ -35,11 +35,34 @@ export const generatePRPTool: ToolDefinition = {
     // Ensure destination directory exists
     await fs.mkdir(path.dirname(outPath), { recursive: true });
 
-    // Very naive implementation: just prepend a TODO header and copy content
-    const contents = await fs.readFile(featurePath, "utf8");
-    const prpContents = `# TODO: Auto-generated PRP based on ${path.basename(
+    // Load required files
+    const featureMarkdown = await fs.readFile(featurePath, "utf8");
+
+    // Try to load the base PRP template if it exists. Fallback to empty string.
+    const baseTemplatePath = path.resolve(
+      "PRPs/templates/prp_base.md"
+    );
+    let baseTemplate = "";
+    try {
+      baseTemplate = await fs.readFile(baseTemplatePath, "utf8");
+    } catch {
+      // ignore – keep template blank
+    }
+
+    // Compose the final PRP
+    const prpHeader = `name: "${path
+      .basename(featureFile, path.extname(featureFile))
+      .replace(/_/g, " ")} PRP"\ndescription: |\n  Generated automatically from feature request **${path.basename(
       featureFile
-    )}\n\n` + contents;
+    )}**.\n  Review and complete all TODO sections marked below before executing.\n\n`;
+
+    const prpContents = [
+      prpHeader,
+      baseTemplate,
+      "\n---\n\n## Original Feature Request (verbatim)\n",
+      featureMarkdown
+    ].join("");
+
     await fs.writeFile(outPath, prpContents, "utf8");
 
     return { prpPath: outPath };
