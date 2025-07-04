@@ -23,3 +23,7 @@ declare module "child_process" {
   import { ExecOptions } from "child_process";
   export function exec(command: string, options: ExecOptions | undefined | null, callback: (error: any, stdout: string, stderr: string) => void): any;
 }
+
+declare module "util" {
+  export function promisify<T>(fn: (...args: any[]) => void): (...args: any[]) => Promise<T>;
+}
