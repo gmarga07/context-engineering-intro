@@ -1,6 +1,8 @@
 import { ToolDefinition } from "@modelcontextprotocol/sdk";
 import fs from "fs/promises";
 import path from "path";
+import { exec } from "child_process";
+import { promisify } from "util";
 
 export const generatePRPTool: ToolDefinition = {
   name: "generatePRP",
@@ -59,8 +61,6 @@ export const generatePRPTool: ToolDefinition = {
       let codebaseTree = "";
       send?.("Generating codebase tree overview…");
       try {
-        const { exec } = await import("child_process");
-        const { promisify } = await import("util");
         const execAsync: any = promisify(exec);
         const { stdout } = await execAsync(
           'tree -L 2 -I ".git|node_modules|dist" || echo "(tree not available)"'

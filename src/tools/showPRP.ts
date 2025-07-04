@@ -1,6 +1,6 @@
 import { ToolDefinition } from "@modelcontextprotocol/sdk";
-import fs from "fs/promises";
-import path from "path";
+import fs from "node:fs/promises";
+import path from "node:path";
 
 export const showPRPTool: ToolDefinition = {
   name: "showPRP",

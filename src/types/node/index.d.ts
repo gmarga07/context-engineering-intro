@@ -38,3 +38,19 @@ declare module "util" {
   export function promisify<T = any>(fn: (...args: any[]) => void): (...args: any[]) => Promise<T>;
   export type Callbackify<T> = (...args: any[]) => void;
 }
+
+declare module "node:fs/promises" {
+  export * from "fs/promises";
+}
+
+declare module "node:path" {
+  export * from "path";
+}
+
+declare module "node:child_process" {
+  export * from "child_process";
+}
+
+declare module "node:util" {
+  export * from "util";
+}

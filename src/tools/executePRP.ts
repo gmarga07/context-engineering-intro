@@ -1,8 +1,9 @@
 import { ToolDefinition } from "@modelcontextprotocol/sdk";
-import fs from "fs/promises";
-import path from "path";
+import fs from "node:fs/promises";
+import path from "node:path";
 
-import { promisify } from "util";
+import { promisify } from "node:util";
+import { exec } from "node:child_process";
 
 export const executePRPTool: ToolDefinition = {
   name: "executePRP",
@@ -62,7 +63,6 @@ export const executePRPTool: ToolDefinition = {
 
     send?.(`Found ${commands.length} validation command(s). Executing…`);
 
-    const { exec } = await import("child_process");
     const execAsync: any = promisify(exec);
 
     const results: {
