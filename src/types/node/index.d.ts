@@ -35,5 +35,6 @@ declare module "child_process" {
 }
 
 declare module "util" {
-  export function promisify<T>(fn: (...args: any[]) => void): (...args: any[]) => Promise<T>;
+  export function promisify<T = any>(fn: (...args: any[]) => void): (...args: any[]) => Promise<T>;
+  export type Callbackify<T> = (...args: any[]) => void;
 }
