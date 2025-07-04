@@ -1,6 +1,6 @@
 import { ToolDefinition } from "@modelcontextprotocol/sdk";
-import fs from "node:fs/promises";
-import path from "node:path";
+import * as fs from "node:fs/promises";
+import * as path from "node:path";
 
 import { promisify } from "node:util";
 import { exec } from "node:child_process";

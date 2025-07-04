@@ -1,6 +1,6 @@
 import { ToolDefinition } from "@modelcontextprotocol/sdk";
-import fs from "node:fs/promises";
-import path from "node:path";
+import * as fs from "node:fs/promises";
+import * as path from "node:path";
 
 async function getPRPFiles(dir: string): Promise<string[]> {
   const entries = await fs.readdir(dir, { withFileTypes: true });
