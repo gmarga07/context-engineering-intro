@@ -1,18 +1,19 @@
-import fs from "fs/promises";
-import path from "path";
+import { describe, it, expect, beforeAll, afterAll } from "@jest/globals";
+import { readFile, writeFile, mkdir, rm, access } from "fs/promises";
+import { resolve, join } from "path";
 import { generatePRPTool } from "../src/tools/generatePRP";
 
 describe("generatePRP tool", () => {
-  const tmpDir = path.resolve("tests/__tmp");
-  const featurePath = path.join(tmpDir, "FEATURE.md");
+  const tmpDir = resolve("tests/__tmp");
+  const featurePath = join(tmpDir, "FEATURE.md");
 
   beforeAll(async () => {
-    await fs.mkdir(tmpDir, { recursive: true });
-    await fs.writeFile(featurePath, "## FEATURE\n\nTest feature", "utf8");
+    await mkdir(tmpDir, { recursive: true });
+    await writeFile(featurePath, "## FEATURE\n\nTest feature", "utf8");
   });
 
   afterAll(async () => {
-    await fs.rm(tmpDir, { recursive: true, force: true });
+    await rm(tmpDir, { recursive: true, force: true });
   });
 
   it("creates a PRP file and returns path", async () => {
@@ -21,8 +22,7 @@ describe("generatePRP tool", () => {
       {}
     );
     expect(result.prpPath).toBeDefined();
-    const exists = await fs
-      .access(result.prpPath)
+    const exists = await access(result.prpPath)
       .then(() => true)
       .catch(() => false);
     expect(exists).toBe(true);

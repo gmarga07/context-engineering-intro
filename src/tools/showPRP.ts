@@ -1,6 +1,6 @@
 import { ToolDefinition } from "@modelcontextprotocol/sdk";
-import fs from "node:fs/promises";
-import path from "node:path";
+import { readFile } from "fs/promises";
+import { resolve } from "path";
 
 export const showPRPTool: ToolDefinition = {
   name: "showPRP",
@@ -25,8 +25,8 @@ export const showPRPTool: ToolDefinition = {
       prpPath: string;
       maxChars?: number;
     };
-    const abs = path.resolve(prpPath);
-    const content = await fs.readFile(abs, "utf8");
+    const abs = resolve(prpPath);
+    const content = await readFile(abs, "utf8");
     return { content: content.slice(0, maxChars) };
   }
 };
