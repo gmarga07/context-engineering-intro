@@ -1,2 +1,25 @@
 // Minimal stub for Node.js typings when @types/node is not available in env
 export {};
+
+declare module "fs/promises" {
+  import { PathLike } from "fs";
+  export function readFile(path: PathLike | FileHandle, options?: any): Promise<string | Buffer>;
+  export function writeFile(path: PathLike | FileHandle, data: any, options?: any): Promise<void>;
+  export function readdir(path: PathLike, options?: any): Promise<any>;
+  export function mkdir(path: PathLike, options?: any): Promise<void>;
+  export function rm(path: PathLike, options?: any): Promise<void>;
+  export interface FileHandle {}
+}
+
+declare module "path" {
+  export function resolve(...paths: string[]): string;
+  export function join(...paths: string[]): string;
+  export function dirname(p: string): string;
+  export function basename(p: string, ext?: string): string;
+  export function extname(p: string): string;
+}
+
+declare module "child_process" {
+  import { ExecOptions } from "child_process";
+  export function exec(command: string, options: ExecOptions | undefined | null, callback: (error: any, stdout: string, stderr: string) => void): any;
+}
